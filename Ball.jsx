@@ -12,7 +12,7 @@ const Ball = memo(({ number }) => {
         background = 'green';
     }
     return (
-        <div classNmae="ball" style={{ background }}>{number}</div>
+        <div className="ball" style={{ background }}>{number}</div>
     );
 });
 
