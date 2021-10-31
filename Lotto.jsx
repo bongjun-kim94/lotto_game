@@ -15,9 +15,9 @@ function getWinNumbers() {
 
 class Lotto extends Component {
     state = {
-        winNumbers: getWinNumbers(),
+        winNumbers: getWinNumbers(), // 당첨 숫자들
         winBalls: [],
-        bonus: null,
+        bonus: null, // 보너스 공
         // 한번 더 버튼 보이게
         redo: false,
     };
@@ -48,6 +48,17 @@ class Lotto extends Component {
             clearTimeout(v);
         });
     }
+
+    onClickRedo = () => {
+        console.log('onClickRedo');
+        this.setState({
+            winNumbers: getWinNumbers(),
+            winBalls: [],
+            bonus: null,
+            redo: false,
+        });
+        this.timeouts = [];
+    };
 
     render() {
         const { winBalls, bonus, redo } = this.state;
