@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { Component } from 'react';
 import Ball from './Ball';
 
 function getWinNumbers() {
@@ -12,54 +12,6 @@ function getWinNumbers() {
     const winNumbers = shuffle.splice(0, 6).sort((p, c) => p - c);
     return [...winNumbers, bonusNumber];
 }
-
-const Lotto = () => {
-    const [winNumbers, setWinNumbers] = useState(getWinNumbers());
-    const [winBalls, setWinBalls] = useState([]);
-    const [bonus, setBonus] = useState(null);
-    const [redo, setRedo] = useState(false);
-    const timeouts = useRef([]);
-
-    useEffect(() => {
-        console.log('useEffect');
-        for (let i = 0; i < this.state.winNumbers.length - 1; i ++) {
-            timeouts.current[i] = setTimeout(() => {
-                setWinBalls((prevBalls) => [...prevBalls, winNumbers[i]]);
-            }, (i + 1) * 1000);
-        }
-        this.timeouts[6] = setTimeout(() => {
-            setBunus(winNumbers[6]);
-            setRedo(true);
-        }, 7000);
-        return () => { // componentWillUnMount 자리는 return
-            timeouts.current.forEach((v) => {
-                clearTimeout(v);
-            });
-        };
-    }, [winBalls.length === 0]); // input 자리가 빈 배열이면 componentDidMount랑 똑같음
-    // 배열 요소가 있으면 componentDidMount창 componentDidUpdate 둘 다 수행
-
-    const onClickRedo = () => {
-        console.log('onClickRedo');
-        setWinNumbers(getWinNumbers());
-        setBalls([]);
-        setBonus(null);
-        setRedo(false);
-        timeouts.current = [];
-    };
-
-    return (
-        <>
-            <div>당첨 숫자</div>
-            <div id="결과창">
-                {winBalls.map((v) => <Ball key={v} number={v} />)}
-            </div>
-            <div>보너스!</div>
-            {bonus && <Ball number = {bonus} />}
-            {redo && <button onClick={this.onClickRedo}>한번 더!</button>}
-        </>
-    );
-};
 
 class Lotto extends Component {
     state = {
