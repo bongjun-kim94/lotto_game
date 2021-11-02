@@ -14,7 +14,7 @@ function getWinNumbers() {
 }
 
 const Lotto = () => {
-    // useMemo: 복잡한 함수 결과값을 기억
+    // useMemo: 복잡한 함수 결과값을 기억, 값을 기억
     // useRef: 일반 값을 기억
     // useEffect, useMemo, useCallback 두번째 인자가 있음
     const lottoNumbers = useMemo(() => getWinNumbers(), []);
@@ -43,15 +43,17 @@ const Lotto = () => {
     }, [timeouts.current]); // input 자리가 빈 배열이면 componentDidMount랑 똑같음
     // 배열 요소가 있으면 componentDidMount창 componentDidUpdate 둘 다 수행
 
-    const onClickRedo = () => {
+    // useCallback - 함수를 기억
+    const onClickRedo = useCallback(() => {
         console.log('onClickRedo');
+        console.log(winNumbers);
         setWinNumbers(getWinNumbers());
         setBalls([]);
         setBonus(null);
         setRedo(false);
         // 바뀌는 것
         timeouts.current = [];
-    };
+    }, [winNumbers]);
 
     return (
         <>
