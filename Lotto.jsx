@@ -43,6 +43,10 @@ const Lotto = () => {
     }, [timeouts.current]); // input 자리가 빈 배열이면 componentDidMount랑 똑같음
     // 배열 요소가 있으면 componentDidMount창 componentDidUpdate 둘 다 수행
 
+    useEffect(() => {
+        console.log('로또 숫자를 생성합니다.');
+    }, [winNumbers]);
+
     // useCallback - 함수를 기억
     const onClickRedo = useCallback(() => {
         console.log('onClickRedo');
@@ -69,79 +73,3 @@ const Lotto = () => {
 };
 
 export default Lotto;
-
-// class Lotto extends Component {
-//     state = {
-//         winNumbers: getWinNumbers(), // 당첨 숫자들
-//         winBalls: [],
-//         bonus: null, // 보너스 공
-//         // 한번 더 버튼 보이게
-//         redo: false,
-//     };
-
-//     timeouts = [];
-
-//     runTimeouts = () => {
-//         const { winNumbers } = this.state;
-//         for (let i = 0; i < this.state.winNumbers.length - 1; i ++) {
-//             this.timeouts[i] = setTimeout(() => {
-//                 this.setState((prevState) => {
-//                     return {
-//                         winBalls: [...prevState.winBalls, winNumbers[i]],
-//                     };
-//                 });
-//             }, (i + 1) * 1000);
-//         }
-//         this.timeouts[6] = setTimeout(() => {
-//             this.setState({
-//                 bonus: winNumbers[6],
-//                 redo: true,
-//             });
-//         }, 7000);
-//     }
-
-//     componentDidMount() {
-//         this.runTimeouts();
-//     }
-
-//     componentDidUpdate(prevProps, prevState) {
-//         console.log('didUpdate');
-//         if (this.state.winBalls.length === 0) {
-//             this.runTimeouts();
-//         }
-//     }
-
-//     componentWillUnmount() {
-//         this.timeouts.forEach((v) => {
-//             clearTimeout(v);
-//         });
-//     }
-
-//     onClickRedo = () => {
-//         console.log('onClickRedo');
-//         this.setState({
-//             winNumbers: getWinNumbers(),
-//             winBalls: [],
-//             bonus: null,
-//             redo: false,
-//         });
-//         this.timeouts = [];
-//     };
-
-//     render() {
-//         const { winBalls, bonus, redo } = this.state;
-//         return(
-//             <>
-//                 <div>당첨 숫자</div>
-//                 <div id="결과창">
-//                     {winBalls.map((v) => <Ball key={v} number={v} />)}
-//                 </div>
-//                 <div>보너스!</div>
-//                 {bonus && <Ball number = {bonus} />}
-//                 {redo && <button onClick={this.onClickRedo}>한번 더!</button>}
-//             </>
-//         );
-//     }
-// }
-
-// export default Lotto;
